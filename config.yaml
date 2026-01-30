@@ -1,0 +1,57 @@
+# config.yaml - 项目配置文件
+
+# 数据集路径
+dataset:
+  root_path: "C:\\Users\\Echo\\Desktop\\Modbus Dataset\\Modbus Dataset"
+  benign_path: "benign/network-wide-pcap-capture/network-wide"
+  external_path: "attack/external"
+  compromised_ied_path: "attack/compromised-ied"
+  compromised_scada_path: "attack/compromised-scada"
+
+# 数据采样配置
+sampling:
+  benign_samples: 200000
+  external_samples: -1  # -1表示使用全部数据
+  ied_samples: -1
+  scada_samples: 200000
+  ied_oversample_target: 5000  # SMOTE过采样目标
+
+# 特征工程配置
+features:
+  time_windows:
+    short: "1S"
+    medium: "5S"
+    long: "10S"
+    session: "60S"
+  
+# 模型配置
+model:
+  random_forest:
+    n_estimators: 100
+    max_depth: 20
+    min_samples_split: 10
+    min_samples_leaf: 5
+    max_features: "sqrt"
+    class_weight: "balanced"
+    random_state: 42
+    n_jobs: -1
+
+# 数据集划分
+split:
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+# 规则引擎配置
+rules:
+  packet_rate_threshold: 100  # packets/sec
+  write_ratio_threshold: 0.8
+  entropy_threshold: 0.5
+  time_window_tolerance: 3600  # 秒，非工作时间容忍度
+
+# 输出配置
+output:
+  processed_data: "data/processed"
+  models: "models"
+  results: "results"
+  figures_dpi: 300
